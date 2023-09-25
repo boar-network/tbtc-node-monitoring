@@ -1,0 +1,47 @@
+version: "3"
+
+services:
+  grafana:
+    container_name: grafana
+    image: grafana/grafana:10.1.1
+    restart: always
+    expose:
+      - 3000
+    environment:
+      - GF_SERVER_DOMAIN=${GRAFANA_DOMAIN}
+    volumes:
+      - ./data/grafana:/var/lib/grafana
+      - ./config/grafana/provisioning:/etc/grafana/provisioning
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.grafana.entrypoints=web" # without HTTPS or:
+      # - "traefik.http.routers.grafana.entrypoints=websecure" # HTTPS
+      - "traefik.http.routers.grafana.rule=Host(`${GRAFANA_DOMAIN}`)"
+      - "traefik.http.services.grafana.loadbalancer.server.port=3000"
+      # - "traefik.http.routers.grafana.tls=true" # HTTPS
+      # - "traefik.http.routers.grafana.tls.certresolver=letsencrypt" # HTTPS
+
+  # Traefik works as a reverse proxy for Grafana.
+  # Also it adds Lets Encrypt SSL Certificate.
+  traefik:
+    container_name: traefik
+    image: traefik:v2.10.4
+    restart: always
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      # --- HTTPS ---
+      # - "--entrypoints.websecure.address=:443"
+      # - "--certificatesresolvers.letsencrypt.acme.httpchallenge=true"
+      # - "--certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=web"
+      # - "--certificatesresolvers.letsencrypt.acme.email=${TRAEFIK_LE_EMAIL}"
+      # - "--certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json"
+      # --- HTTPS ---
+    ports:
+      - 80:80
+      # - 443:443 # HTTPS
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      # - ./data/traefik/:/letsencrypt # HTTPS
