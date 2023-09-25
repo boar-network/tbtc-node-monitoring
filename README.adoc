@@ -51,7 +51,8 @@ a domain name and/or a fixed IP address.
 === Initial setup
 
 1. Fork this repository.
-2. Copy `.env.template` into `.env` file. Fill in the variables.
+2. Copy `.env.template` into `.env` file. Fill in the variables. That file is
+used by Docker Compose.
 3. (optional) Modify `docker-compose.yaml` file. Uncomment HTTPS parts if you have
 a domain name and/or a fixed IP address.
 4. Modify `config/grafana/provisioning/alerting/contactpoints.yaml` file. Replace
