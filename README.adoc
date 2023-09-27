@@ -78,6 +78,8 @@ TIP: It's recommended to create a separate dashboard for each node.
 
 === Alerting configuration
 
+Alerts related to the state of a node. Each node should has its own alerting rule.
+
 1. Open `Dashboards` and click Edit on `Status` panel.
 2. Go to `Alert` tab and click `Create alert rule from this panel`.
 3. Set the name. Recommended schema: `Status <chain_address>`.
