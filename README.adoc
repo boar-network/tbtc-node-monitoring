@@ -22,12 +22,13 @@ Features:
 
 The template consists of:
 
-* Docker Compose manifest with Grafana and Traefik (reverse proxy and SSL)
+* Docker Compose manifest with **Grafana** and **Traefik**
+** Traefik is used as a reverse proxy and provides SSL/TLS certificates
+from Let's Encrypt. SSL/TLS certificate requires a domain name.
 * Configuration for Grafana
-  * Pre-configured data source with Threshold's Prometheus (https://monitoring.threshold.network/prometheus/)
-  * Policy and Contact point with Discord
-  * Dashboard
-
+** Pre-configured data source with Threshold's Prometheus (https://monitoring.threshold.network/prometheus/)
+** Policy and Contact point with Discord
+** Dashboard
 
 == Screenshots
 
@@ -47,7 +48,7 @@ image::./docs/alert-resolved.png[]
 The monitoring can be run on your local machine or on a server.
 The only requirement is to have Docker and Docker Compose installed.
 If you want to use SSL/TLS certificates from Let's Encrypt, you need to have
-a domain name and/or a fixed IP address.
+a domain name.
 
 === Initial setup
 
@@ -55,7 +56,7 @@ a domain name and/or a fixed IP address.
 2. Copy `.env.template` into `.env` file. Fill in the variables. That file is
 used by Docker Compose.
 3. (optional) Modify `docker-compose.yaml` file. Uncomment HTTPS parts if you have
-a domain name and/or a fixed IP address.
+a domain name.
 4. Modify `config/grafana/provisioning/alerting/contactpoints.yaml` file. Replace
 `<your_discord_webhook_url>` with your Discord webhook URL.
 5. Run `docker-compose up -d` to start the stack.
@@ -70,7 +71,7 @@ a domain name and/or a fixed IP address.
 4. Go to `Dashboards` and select `tBTC Node` dashboard.
 5. Go to dashboard settings and replace variable `chain_address` with your node's address.
 +
-Currently, the dashboard contains 2 addresses - these are tBTC bootstrap nodes.
+Currently, the dashboard contains 2 addresses only for demo - these are tBTC bootstrap nodes.
 They don't expose all metrics, thus the dashboard won't work fully with them.
 
 TIP: It's recommended to create a separate dashboard for each node.

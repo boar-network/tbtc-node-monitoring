@@ -1,3 +1,6 @@
+#
+# This Docker Compose uses .env file to load environment variables.
+#
 version: "3"
 
 services:
